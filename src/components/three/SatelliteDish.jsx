@@ -2,6 +2,7 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollRotation } from '../../hooks/useScrollRotation';
+import AutoFit from './AutoFit';
 
 // A large, imposing deep-space communications dish: solid shaded reflector,
 // tripod feed converging on a ball joint, elevation pivot and a tiered
@@ -50,7 +51,7 @@ function Strut({ from, to, color, opacity = 0.55, radius = 0.025 }) {
   );
 }
 
-function Dish() {
+function Dish({ shiftX }) {
   const group = useRef();
   const ringsRef = useRef([]);
   const beaconRef = useRef();
@@ -106,7 +107,7 @@ function Dish() {
   });
 
   return (
-    <group position={[0, 0.35, 0]}>
+    <group position={[shiftX, 0.35, 0]}>
       <group ref={group} rotation={[BASE_PITCH, BASE_YAW, 0]}>
         {/* Solid shaded parabolic reflector */}
         <mesh rotation={[Math.PI / 2, 0, 0]}>
@@ -227,13 +228,14 @@ function TransmittedWaves({ ringsRef, waveColors }) {
   );
 }
 
-export default function SatelliteDish() {
+export default function SatelliteDish({ shiftX = 0 }) {
   return (
-    <Canvas camera={{ position: [5.2, 0.5, 8.4], fov: 34 }} dpr={[1, 1.5]}>
+    <Canvas camera={{ position: [4.6, 0.6, 7.2], fov: 34 }} dpr={[1, 1.5]}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[3, 4, 5]} intensity={1.1} color="#e2e8f0" />
       <directionalLight position={[-3, -1, 2]} intensity={0.35} color="#38bdf8" />
-      <Dish />
+      <AutoFit width={12.2} height={9.3} />
+      <Dish shiftX={shiftX} />
     </Canvas>
   );
 }

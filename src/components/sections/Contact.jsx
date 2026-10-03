@@ -40,9 +40,7 @@ export default function Contact() {
             GitHub
           </a>
         </div>
-        <p className="text-gray-500 text-sm mt-10">
-          {profile.phone} · {profile.location}
-        </p>
+        <p className="text-gray-500 text-sm mt-10">{profile.location}</p>
       </motion.div>
     </section>
   );

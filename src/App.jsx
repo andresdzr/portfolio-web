@@ -9,6 +9,7 @@ import Experience from './components/sections/Experience';
 import Skills from './components/sections/Skills';
 import Contact from './components/sections/Contact';
 import { navItems } from './data/content';
+import { ScrollProgress, CursorGlow } from './components/Polish';
 
 export default function App() {
   const [activeId, setActiveId] = useState('home');
@@ -34,7 +35,9 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative bg-bg">
+    <div className="relative bg-bg grain">
+      <ScrollProgress />
+      <CursorGlow />
       <StickyIndex activeId={activeId} />
       <Hero />
       <Profile />

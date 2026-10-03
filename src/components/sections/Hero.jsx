@@ -47,17 +47,6 @@ export default function Hero() {
         <p className="text-gray-300 text-lg sm:text-xl mb-3">{profile.degree}</p>
         <p className="text-gray-500 text-sm sm:text-base mb-8">{profile.schools}</p>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {profile.highlights.map((h) => (
-            <span
-              key={h}
-              className="glass px-4 py-1.5 rounded-full text-xs font-medium text-emerald-glow border border-emerald-glow/20"
-            >
-              {h}
-            </span>
-          ))}
-        </div>
-
         <div className="flex flex-wrap justify-center gap-4 text-sm">
           <a href={profile.github} target="_blank" rel="noreferrer" className="glass px-5 py-2.5 rounded-full hover:border-cyan-glow/50 border border-transparent transition-colors">
             GitHub
@@ -68,7 +57,6 @@ export default function Hero() {
           <a href={`mailto:${profile.email}`} className="glass px-5 py-2.5 rounded-full hover:border-cyan-glow/50 border border-transparent transition-colors">
             {profile.email}
           </a>
-          <span className="glass px-5 py-2.5 rounded-full">{profile.phone}</span>
           <span className="glass px-5 py-2.5 rounded-full">{profile.location}</span>
         </div>
       </motion.div>

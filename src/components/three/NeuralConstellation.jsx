@@ -2,6 +2,7 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollRotation } from '../../hooks/useScrollRotation';
+import AutoFit from './AutoFit';
 
 // Generates a random 3D point cloud representing neurons/data nodes.
 function useNodes(count) {
@@ -81,11 +82,14 @@ function Constellation() {
   );
 }
 
-export default function NeuralConstellation() {
+export default function NeuralConstellation({ shiftX = 0 }) {
   return (
-    <Canvas camera={{ position: [0, 0, 5.5], fov: 45 }} dpr={[1, 1.5]}>
+    <Canvas camera={{ position: [0, 0, 4.8], fov: 45 }} dpr={[1, 1.5]}>
       <ambientLight intensity={0.4} />
-      <Constellation />
+      <AutoFit width={10.4} height={6.7} direction={[0, 0.05, 1]} />
+      <group position={[shiftX, 0, 0]}>
+        <Constellation />
+      </group>
     </Canvas>
   );
 }

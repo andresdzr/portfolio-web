@@ -1,12 +1,15 @@
 export const profile = {
   name: 'Andrés Díaz Ruano',
-  degree:
-    'Double Degree in Data Science & Engineering and Telecommunication Technologies Engineering',
-  schools: 'Universidad Carlos III de Madrid (UC3M) & Politecnico di Milano',
-  highlights: ['Academic Excellence Scholarship (2 editions)', 'English C1'],
+  degree: 'Engineer in Data Science and Telecommunication Technologies',
+  schools: 'Universidad Carlos III de Madrid (UC3M)',
+  abroad: 'Abroad studies: Politecnico di Milano',
+  highlights: [
+    'Academic Excellence Scholarship (2 editions)',
+    'English C1',
+    'AWS Certified Cloud Practitioner',
+  ],
   location: 'Madrid, Spain',
   email: 'diazruanoandres@gmail.com',
-  phone: '+34 601 420 863',
   github: 'https://github.com/andresdzr',
   linkedin:
     'https://www.linkedin.com/in/andr%C3%A9s-d%C3%ADaz-ruano-9a96b73b9/?isSelfProfile=true',
@@ -38,12 +41,28 @@ export const telecom = {
 export const dataScience = {
   intro:
     'Applying statistical modeling and deep learning to extract signal from real-world data.',
-  skills: ['PyTorch', 'Scikit-learn', 'Pandas', 'NumPy'],
+  skills: [
+    'Machine Learning',
+    'Deep Learning',
+    'Neural Networks',
+    'Predictive Modeling',
+    'Data Pipelines',
+    'AI Agents',
+    'PyTorch',
+    'Scikit-learn',
+    'Pandas',
+    'NumPy',
+  ],
   projects: [
     {
       name: 'Hiili (UC3M)',
       description:
         'Optimization algorithms for advertising budget allocation, balancing profitability against CO₂ emissions.',
+    },
+    {
+      name: 'Machine Learning & Data Pipelines',
+      description:
+        'End-to-end pipelines for ingesting, cleaning and modeling data, with predictive models for forecasting and decision support.',
     },
     {
       name: 'Neural Networks',
@@ -57,11 +76,13 @@ export const cloud = {
   intro:
     'Deploying and automating infrastructure across static, serverless and dynamic-data architectures.',
   items: [
-    'AWS S3 & CloudFront static deployments',
-    'Origin Access Control (OAC) & serverless architectures',
+    'AWS S3 — static hosting and storage',
+    'CloudFront — global CDN delivery',
+    'Origin Access Control (OAC) — secure bucket access',
+    'Lambda & API Gateway — serverless architectures',
+    'EC2, IAM, Route 53 & CloudWatch — compute, access, DNS and monitoring',
     'GitHub CI/CD integration',
     'Dynamic databases with Firebase & MySQL',
-    'AWS Certified Cloud Practitioner',
   ],
 };
 
