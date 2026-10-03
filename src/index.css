@@ -47,6 +47,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.02em;
   white-space: nowrap;
+  padding-right: 0.12em;
 }
 
 .grain::after {

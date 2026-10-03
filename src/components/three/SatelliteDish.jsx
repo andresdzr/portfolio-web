@@ -13,6 +13,13 @@ const RIM_Z = DEPTH;
 const FEED_Z = DEPTH + 0.55;
 const BASE_PITCH = -0.55; // tilted back, aimed skyward
 const BASE_YAW = Math.PI - 0.25; // turned 180° from the previous facing, slightly off-axis for depth
+const HALO_LAYERS = [
+  [0.16, 0.13],
+  [0.22, 0.08],
+  [0.3, 0.05],
+  [0.4, 0.025],
+  [0.55, 0.012],
+];
 
 function useDishProfile() {
   return useMemo(() => {
@@ -161,16 +168,19 @@ function Dish({ shiftX }) {
           <sphereGeometry args={[0.12, 16, 16]} />
           <meshStandardMaterial color="#e2e8f0" roughness={0.3} metalness={0.5} />
         </mesh>
-
-        {/* Feed horn / subreflector instrument */}
-        <mesh position={[0, 0, FEED_Z + 0.26]} rotation={[Math.PI, 0, 0]}>
-          <coneGeometry args={[0.14, 0.4, 14]} />
-          <meshStandardMaterial color="#a855f7" roughness={0.3} metalness={0.5} />
-        </mesh>
-        <mesh position={[0, 0, FEED_Z + 0.5]}>
-          <sphereGeometry args={[0.07, 12, 12]} />
-          <meshStandardMaterial color="#a855f7" emissive="#a855f7" emissiveIntensity={0.4} />
-        </mesh>
+        {/* Light halo: brightest close to the tip, fading outward */}
+        {HALO_LAYERS.map(([radius, opacity], i) => (
+          <mesh key={`halo-${i}`} position={feed}>
+            <sphereGeometry args={[radius, 24, 24]} />
+            <meshBasicMaterial
+              color="#bae6fd"
+              transparent
+              opacity={opacity}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+            />
+          </mesh>
+        ))}
 
         {/* Elevation bearing behind the dish */}
         <mesh position={pivot} rotation={[Math.PI / 2, 0, 0]}>
