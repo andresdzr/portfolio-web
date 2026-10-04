@@ -7,7 +7,7 @@ import { telecom } from '../../data/content';
 export default function Telecom() {
   const isDesktop = useIsDesktop();
   return (
-    <SceneSection id="telecom" scene={<SatelliteDish shiftX={isDesktop ? 2.5 : 0} />}>
+    <SceneSection id="telecom" scene={<SatelliteDish shiftX={isDesktop ? 3 : 0} />}>
       <div className="pointer-events-auto">
         <h2 className="section-title text-gradient mb-4">Telecommunications</h2>
         <p className="text-gray-400 mb-8">{telecom.intro}</p>

@@ -7,7 +7,7 @@ import { dataScience } from '../../data/content';
 export default function DataScience() {
   const isDesktop = useIsDesktop();
   return (
-    <SceneSection id="data" scene={<NeuralConstellation shiftX={isDesktop ? -2.5 : 0} />}>
+    <SceneSection id="data" scene={<NeuralConstellation shiftX={isDesktop ? -3.8 : 0} />}>
       <div className="md:col-start-2 pointer-events-auto">
         <h2 className="section-title text-gradient mb-4">Data Science & AI</h2>
         <p className="text-gray-400 mb-6">{dataScience.intro}</p>

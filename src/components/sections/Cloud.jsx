@@ -7,7 +7,7 @@ import { cloud } from '../../data/content';
 export default function Cloud() {
   const isDesktop = useIsDesktop();
   return (
-    <SceneSection id="cloud" scene={<CloudNetwork shiftX={isDesktop ? 2.4 : 0} />}>
+    <SceneSection id="cloud" scene={<CloudNetwork shiftX={isDesktop ? 2.2 : 0} />}>
       <div className="pointer-events-auto">
         <h2 className="section-title text-gradient mb-4">Cloud Computing</h2>
         <p className="text-gray-400 mb-8">{cloud.intro}</p>
