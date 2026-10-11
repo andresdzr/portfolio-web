@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { profile } from '../../data/content';
+import ContactForm from '../ContactForm';
 
 export default function Contact() {
   return (
@@ -9,7 +10,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-2xl"
+        className="max-w-2xl w-full"
       >
         <h2 className="section-title text-gradient mb-6">Let's talk</h2>
         <p className="text-gray-400 mb-10">
@@ -40,6 +41,9 @@ export default function Contact() {
             GitHub
           </a>
         </div>
+
+        <ContactForm />
+
         <p className="text-gray-500 text-sm mt-10">{profile.location}</p>
       </motion.div>
     </section>
