@@ -12,7 +12,7 @@ const DEPTH = 0.85; // deep bowl for a dramatic concave read
 const RIM_Z = DEPTH;
 const FEED_Z = DEPTH + 0.55;
 const BASE_PITCH = -0.55; // tilted back, aimed skyward
-const BASE_YAW = -0.25 - Math.PI / 6; // turned 180° from the previous facing
+const BASE_YAW = Math.PI - 0.25 - Math.PI / 6 - Math.PI / 2; // turned 180° from the previous facing, then 90° more
 const HALO_LAYERS = [
   [0.16, 0.13],
   [0.22, 0.08],
@@ -244,7 +244,7 @@ export default function SatelliteDish({ shiftX = 0 }) {
       <ambientLight intensity={0.5} />
       <directionalLight position={[3, 4, 5]} intensity={1.1} color="#e2e8f0" />
       <directionalLight position={[-3, -1, 2]} intensity={0.35} color="#38bdf8" />
-      <AutoFit width={12.2} height={9.3} />
+      <AutoFit width={13.4} height={9.3} />
       <Dish shiftX={shiftX} />
     </Canvas>
   );
