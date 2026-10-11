@@ -21,6 +21,14 @@ export default function Telecom() {
             ))}
           </ul>
         </GlassCard>
+        <div className="mt-4 space-y-4">
+          {telecom.projects.map((p) => (
+            <GlassCard key={p.name}>
+              <h3 className="font-semibold text-cyan-glow mb-1">{p.name}</h3>
+              <p className="text-gray-400 text-sm">{p.description}</p>
+            </GlassCard>
+          ))}
+        </div>
       </div>
     </SceneSection>
   );

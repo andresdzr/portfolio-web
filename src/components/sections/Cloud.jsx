@@ -10,8 +10,30 @@ export default function Cloud() {
     <SceneSection id="cloud" scene={<CloudNetwork shiftX={isDesktop ? 2.2 : 0} />}>
       <div className="pointer-events-auto">
         <h2 className="section-title text-gradient mb-4">Cloud Computing</h2>
-        <p className="text-gray-400 mb-8">{cloud.intro}</p>
-        <GlassCard>
+        <p className="text-gray-400 mb-6">{cloud.intro}</p>
+
+        <GlassCard className="mb-4">
+          <h3 className="font-semibold text-emerald-glow mb-3">AWS Services</h3>
+          <div className="flex flex-wrap gap-2">
+            {cloud.awsServices.map((service) => (
+              <span
+                key={service}
+                className="px-3 py-1.5 rounded-lg text-sm bg-emerald-glow/10 border border-emerald-glow/20 text-gray-200"
+              >
+                {service}
+              </span>
+            ))}
+          </div>
+        </GlassCard>
+
+        <GlassCard className="mb-4" delay={0.05}>
+          <span className="inline-flex items-center gap-2 text-emerald-glow font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-glow" />
+            {cloud.certification}
+          </span>
+        </GlassCard>
+
+        <GlassCard delay={0.1}>
           <ul className="space-y-3">
             {cloud.items.map((item) => (
               <li key={item} className="flex items-start gap-3 text-gray-300">

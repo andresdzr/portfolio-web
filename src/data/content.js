@@ -1,6 +1,9 @@
 export const profile = {
   name: 'Andrés Díaz Ruano',
   degree: 'Engineer in Data Science and Telecommunication Technologies',
+  fullDegree:
+    'Dual Bachelor in Data Science and Engineering and Telecommunication Technologies Engineering',
+  programNote: 'Program taught entirely in English.',
   schools: 'Universidad Carlos III de Madrid (UC3M)',
   abroad: 'Abroad studies: Politecnico di Milano',
   highlights: [
@@ -32,9 +35,18 @@ export const telecom = {
   items: [
     'Signal processing & spectrum simulation',
     'Quantum communications fundamentals',
+    'Digital communications & RF: modulation, channel coding, antennas',
+    'Networking: TCP/IP, routing, switching',
     'MATLAB & Python for systems modeling',
     'Lab instrumentation: oscilloscopes, signal generators',
     'Embedded systems: STM32, C, VHDL, Arduino',
+  ],
+  projects: [
+    {
+      name: 'Undergraduate Thesis — Telecommunications',
+      description:
+        'Developed a nanoplasmonic sensor, studying deposition techniques for plasmonic nanoparticles on surfaces.',
+    },
   ],
 };
 
@@ -48,6 +60,8 @@ export const dataScience = {
     'Predictive Modeling',
     'Data Pipelines',
     'AI Agents',
+    'Computer Vision',
+    'Big Data Processing',
     'PyTorch',
     'Scikit-learn',
     'Pandas',
@@ -69,20 +83,37 @@ export const dataScience = {
       description:
         'Deep learning projects applied to image and audio processing.',
     },
+    {
+      name: 'Undergraduate Thesis — Data Science',
+      description:
+        'Predicting surgical phases and duration in skull-base endoscopy using deep learning techniques.',
+    },
   ],
 };
 
 export const cloud = {
   intro:
     'Deploying and automating infrastructure across static, serverless and dynamic-data architectures.',
+  certification: 'AWS Certified Cloud Practitioner',
+  awsServices: [
+    'S3',
+    'CloudFront',
+    'OAC',
+    'Lambda',
+    'API Gateway',
+    'EC2',
+    'IAM',
+    'Route 53',
+    'CloudWatch',
+    'RDS',
+    'EFS',
+    'SES',
+    'Billing & Cost Explorer',
+  ],
   items: [
-    'AWS S3 — static hosting and storage',
-    'CloudFront — global CDN delivery',
-    'Origin Access Control (OAC) — secure bucket access',
-    'Lambda & API Gateway — serverless architectures',
-    'EC2, IAM, Route 53 & CloudWatch — compute, access, DNS and monitoring',
     'GitHub CI/CD integration',
     'Dynamic databases with Firebase & MySQL',
+    'Cybersecurity & GDPR / data protection compliance',
   ],
 };
 
@@ -111,8 +142,8 @@ export const experience = [
     role: 'Logistics Operations',
     period: 'Jun 2025 — Jul 2025',
     points: [
-      'High-demand logistics operations',
-      'Merchandise control systems',
+      'Teamwork in high-demand environments, meeting daily productivity targets',
+      'Used internal tracking systems for merchandise monitoring and control',
     ],
   },
 ];

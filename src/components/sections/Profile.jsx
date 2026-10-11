@@ -16,9 +16,10 @@ export default function Profile() {
             <h3 className="text-xl font-semibold text-cyan-glow mb-2">
               Education
             </h3>
-            <p className="text-gray-300">{profile.degree}</p>
+            <p className="text-gray-300">{profile.fullDegree}</p>
             <p className="text-gray-500 text-sm mt-2">{profile.schools}</p>
             <p className="text-gray-500 text-sm mt-1">{profile.abroad}</p>
+            <p className="text-gray-500 text-sm mt-1">{profile.programNote}</p>
           </GlassCard>
           <GlassCard delay={0.1}>
             <h3 className="text-xl font-semibold text-purple-glow mb-2">

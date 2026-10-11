@@ -12,7 +12,7 @@ const DEPTH = 0.85; // deep bowl for a dramatic concave read
 const RIM_Z = DEPTH;
 const FEED_Z = DEPTH + 0.55;
 const BASE_PITCH = -0.55; // tilted back, aimed skyward
-const BASE_YAW = Math.PI - 0.25; // turned 180° from the previous facing, slightly off-axis for depth
+const BASE_YAW = -0.25 - Math.PI / 6; // turned 180° from the previous facing
 const HALO_LAYERS = [
   [0.16, 0.13],
   [0.22, 0.08],

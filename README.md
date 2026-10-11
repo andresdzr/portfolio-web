@@ -22,5 +22,5 @@ npm run preview
 
 - `src/data/content.js` — all CV text content.
 - `src/components/three/` — the three WebGL wireframe scenes (antenna, neural constellation, cloud).
-- `src/components/sections/` — page sections.
+- `src/components/sections/` — one component per page section.
 - `src/components/StickyIndex.jsx` — the scroll-spy side navigation.
