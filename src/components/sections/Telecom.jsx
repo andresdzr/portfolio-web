@@ -1,35 +1,34 @@
-import GlassCard from '../GlassCard';
 import SceneSection from '../SceneSection';
 import SatelliteDish from '../three/SatelliteDish';
+import { Heading, Reveal } from '../Reveal';
 import { useIsDesktop } from '../../hooks/useIsDesktop';
 import { telecom } from '../../data/content';
 
 export default function Telecom() {
-  const isDesktop = useIsDesktop();
+  const isDesktop = useIsDesktop('(min-width: 1024px)');
   return (
-    <SceneSection id="telecom" scene={<SatelliteDish shiftX={isDesktop ? 3.6 : 0} />}>
-      <div className="pointer-events-auto">
-        <h2 className="section-title text-gradient mb-4">Telecommunications</h2>
-        <p className="text-gray-400 mb-8">{telecom.intro}</p>
-        <GlassCard>
-          <ul className="space-y-3">
-            {telecom.items.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-gray-300">
-                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-glow shrink-0" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </GlassCard>
-        <div className="mt-4 space-y-4">
-          {telecom.projects.map((p) => (
-            <GlassCard key={p.name}>
-              <h3 className="font-semibold text-cyan-glow mb-1">{p.name}</h3>
-              <p className="text-gray-400 text-sm">{p.description}</p>
-            </GlassCard>
+    <SceneSection id="telecom" labelledBy="telecom-title" scene={<SatelliteDish shiftX={isDesktop ? 3.6 : 0} />}>
+      <Heading id="telecom-title" lines={['Signals and', 'telecom']} />
+      <Reveal>
+        <p className="t-lead text-slate-300 mt-6 max-w-[36ch]">{telecom.intro}</p>
+      </Reveal>
+      <Reveal delay={0.06} className="panel panel--lit mt-10">
+        <h3 className="text-white font-semibold mb-4">Core skills</h3>
+        <ul className="grid gap-2.5">
+          {telecom.items.map((item) => (
+            <li key={item} className="flex items-start gap-3 text-slate-200">
+              <span className="mt-[0.6em] w-1.5 h-1.5 rounded-full bg-[var(--lilac)] shrink-0" aria-hidden="true" />
+              {item}
+            </li>
           ))}
-        </div>
-      </div>
+        </ul>
+      </Reveal>
+      {telecom.projects.map((p) => (
+        <Reveal key={p.name} delay={0.1} className="panel panel--lit mt-10">
+          <h3 className="text-white font-semibold">{p.name}</h3>
+          <p className="mt-1 text-slate-400">{p.description}</p>
+        </Reveal>
+      ))}
     </SceneSection>
   );
 }

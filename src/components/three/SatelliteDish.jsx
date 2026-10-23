@@ -4,10 +4,12 @@ import * as THREE from 'three';
 import { useScrollRotation } from '../../hooks/useScrollRotation';
 import AutoFit from './AutoFit';
 
+const ZOOM = 1.05; // how much larger than a snug fit the model is drawn
+
 // A large, imposing deep-space communications dish: solid shaded reflector,
 // tripod feed converging on a ball joint, elevation pivot and a tiered
-// control-tower pedestal — modeled after large array antennas.
-const R = 2; // dish radius — big and dominant in frame
+// control-tower pedestal, modeled after large array antennas.
+const R = 2; // dish radius, big and dominant in frame
 const DEPTH = 0.85; // deep bowl for a dramatic concave read
 const RIM_Z = DEPTH;
 const FEED_Z = DEPTH + 0.55;
@@ -78,15 +80,11 @@ function Dish({ shiftX }) {
   const elbow = useMemo(() => new THREE.Vector3(0, -1.1, -0.65), []);
   const towerTop = useMemo(() => new THREE.Vector3(0, -1.5, -0.65), []);
 
-  const waveColors = ['#38bdf8', '#38bdf8', '#818cf8', '#38bdf8', '#818cf8', '#38bdf8'];
+  const waveColors = ['#5b8cff', '#5b8cff', '#818cf8', '#5b8cff', '#818cf8', '#5b8cff'];
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (group.current) {
-      group.current.rotation.y = THREE.MathUtils.lerp(
-        group.current.rotation.y,
-        BASE_YAW + rotTarget.current,
-        0.06
-      );
+      group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, BASE_YAW + rotTarget.current, 3.5, Math.min(delta, 0.05));
     }
     if (beaconRef.current) {
       const pulse = 0.4 + 0.6 * Math.abs(Math.sin(state.clock.elapsedTime * 2));
@@ -114,7 +112,7 @@ function Dish({ shiftX }) {
   });
 
   return (
-    <group position={[shiftX, 0.35, 0]}>
+    <group position={[shiftX, 1.05, 0]}>
       <group ref={group} rotation={[BASE_PITCH, BASE_YAW, 0]}>
         {/* Solid shaded parabolic reflector */}
         <mesh rotation={[Math.PI / 2, 0, 0]}>
@@ -131,7 +129,7 @@ function Dish({ shiftX }) {
         {/* Fine tech-grid overlay for the high-tech read */}
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <latheGeometry args={[profile, 40]} />
-          <meshBasicMaterial color="#38bdf8" wireframe transparent opacity={0.22} />
+          <meshBasicMaterial color="#5b8cff" wireframe transparent opacity={0.22} />
         </mesh>
 
         {/* Rim ring defining the aperture */}
@@ -173,7 +171,7 @@ function Dish({ shiftX }) {
           <mesh key={`halo-${i}`} position={feed}>
             <sphereGeometry args={[radius, 24, 24]} />
             <meshBasicMaterial
-              color="#bae6fd"
+              color="#c7d2fe"
               transparent
               opacity={opacity}
               depthWrite={false}
@@ -215,7 +213,7 @@ function Dish({ shiftX }) {
         {/* Beacon light for scale and drama */}
         <mesh ref={beaconRef} position={[towerTop.x + 0.3, towerTop.y - 0.1, towerTop.z]}>
           <sphereGeometry args={[0.035, 8, 8]} />
-          <meshStandardMaterial color="#f87171" emissive="#f87171" emissiveIntensity={0.9} transparent />
+          <meshStandardMaterial color="#c4b5fd" emissive="#c4b5fd" emissiveIntensity={0.9} transparent />
         </mesh>
       </group>
       <TransmittedWaves ringsRef={ringsRef} waveColors={waveColors} />
@@ -243,9 +241,9 @@ export default function SatelliteDish({ shiftX = 0 }) {
     <Canvas camera={{ position: [4.6, 0.6, 7.2], fov: 34 }} dpr={[1, 1.5]}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[3, 4, 5]} intensity={1.1} color="#e2e8f0" />
-      <directionalLight position={[-3, -1, 2]} intensity={0.35} color="#38bdf8" />
-      <AutoFit width={13.4} height={9.3} />
-      <Dish shiftX={shiftX} />
+      <directionalLight position={[-3, -1, 2]} intensity={0.35} color="#5b8cff" />
+      <AutoFit width={13.4 / ZOOM} height={9.3 / ZOOM} />
+      <Dish shiftX={shiftX / ZOOM} />
     </Canvas>
   );
 }

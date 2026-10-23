@@ -4,6 +4,8 @@ import * as THREE from 'three';
 import { useScrollRotation } from '../../hooks/useScrollRotation';
 import AutoFit from './AutoFit';
 
+const ZOOM = 1.3; // how much larger than a snug fit the model is drawn
+
 // Cloud lobes: [x, y, z, radius]. A wide, flat-bottomed cluster with stacked
 // rounded lobes on top, giving a recognizable geometric cloud silhouette.
 const LOBES = [
@@ -56,7 +58,7 @@ function lobeSurfaceAnchor(node) {
 // Glowing core inside a wireframe shell, with an orbit ring tilted per node.
 function ServiceNode({ position, index }) {
   const ring = useRef();
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (ring.current) ring.current.rotation.z = state.clock.elapsedTime * 0.8 + index;
   });
 
@@ -92,13 +94,9 @@ function CloudShape() {
     return new THREE.BufferGeometry().setFromPoints(points);
   }, [nodes]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (group.current) {
-      group.current.rotation.y = THREE.MathUtils.lerp(
-        group.current.rotation.y,
-        rotTarget.current,
-        0.06
-      );
+      group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, rotTarget.current, 3.5, Math.min(delta, 0.05));
     }
     if (linesMat.current) {
       linesMat.current.opacity = 0.25 + 0.2 * Math.abs(Math.sin(state.clock.elapsedTime * 1.2));
@@ -123,7 +121,7 @@ function CloudShape() {
 
       {/* Connections: each line runs from a lobe surface point to its node */}
       <lineSegments geometry={connectionGeometry}>
-        <lineBasicMaterial ref={linesMat} color="#38bdf8" transparent opacity={0.4} />
+        <lineBasicMaterial ref={linesMat} color="#5b8cff" transparent opacity={0.4} />
       </lineSegments>
 
       {/* Peripheral service nodes, exactly at the connection endpoints */}
@@ -134,12 +132,12 @@ function CloudShape() {
   );
 }
 
-export default function CloudNetwork({ shiftX = 0 }) {
+export default function CloudNetwork({ shiftX = 0, fitWidth = 11, fitHeight = 6 }) {
   return (
     <Canvas camera={{ position: [0, 0.6, 5.4], fov: 42 }} dpr={[1, 1.5]}>
       <ambientLight intensity={0.4} />
-      <AutoFit width={11} height={6} direction={[0, 0.1, 1]} />
-      <group position={[shiftX, 0, 0]}>
+      <AutoFit width={fitWidth / ZOOM} height={fitHeight / ZOOM} direction={[0, 0.1, 1]} />
+      <group position={[(shiftX / ZOOM) * 0.88, 0, 0]}>
         <CloudShape />
       </group>
     </Canvas>

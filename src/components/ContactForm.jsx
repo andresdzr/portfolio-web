@@ -5,8 +5,8 @@ const API_URL = import.meta.env.VITE_CONTACT_API_URL;
 const EMPTY = { name: '', email: '', message: '', website: '' };
 
 const inputClass =
-  'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-platinum placeholder-gray-500 ' +
-  'focus:outline-none focus:border-cyan-glow/60 focus:bg-white/10 transition-colors';
+  'w-full bg-[var(--surface-2)] rounded-xl ring-1 ring-transparent px-4 py-3.5 text-white placeholder-slate-500 ' +
+  'focus:outline-none focus:ring-[var(--lilac)] transition-colors';
 
 export default function ContactForm() {
   const [form, setForm] = useState(EMPTY);
@@ -38,15 +38,16 @@ export default function ContactForm() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="w-full mt-10"
+      className="w-full"
     >
-      <div className="glass glow-border rounded-2xl p-6 flex flex-col gap-4 text-left">
-        <div className="flex flex-col sm:flex-row gap-4">
+      <div className="panel panel--lit flex flex-col gap-3 text-left">
+        <div className="flex flex-col sm:flex-row gap-3">
           <input
             name="name"
             value={form.name}
             onChange={update}
             placeholder="Your name"
+            aria-label="Your name"
             required
             maxLength={100}
             autoComplete="name"
@@ -58,6 +59,7 @@ export default function ContactForm() {
             value={form.email}
             onChange={update}
             placeholder="Your email"
+            aria-label="Your email"
             required
             maxLength={200}
             autoComplete="email"
@@ -70,6 +72,7 @@ export default function ContactForm() {
           value={form.message}
           onChange={update}
           placeholder="Your message"
+            aria-label="Your message"
           required
           minLength={5}
           maxLength={5000}
@@ -89,16 +92,16 @@ export default function ContactForm() {
         />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm min-h-[1.25rem]">
-            {status === 'sent' && <span className="text-emerald-glow">Message sent. Thanks! I'll get back to you soon.</span>}
+          <p className="t-small min-h-[1.25rem]" role="status">
+            {status === 'sent' && <span className="text-[var(--lilac)]">Message sent. Thanks! I'll get back to you soon.</span>}
             {status === 'error' && <span className="text-red-400">Something went wrong. Please try again or email me directly.</span>}
           </p>
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="glass glow-border px-6 py-3 rounded-full text-purple-glow font-medium hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100"
+            className="btn-primary disabled:opacity-50"
           >
-            {status === 'sending' ? 'Sending…' : 'Send'}
+            {status === 'sending' ? 'Sending…' : 'Send message'}
           </button>
         </div>
       </div>

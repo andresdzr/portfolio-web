@@ -31,7 +31,7 @@ export const navItems = [
 
 export const telecom = {
   intro:
-    'Hands-on experience across the full telecommunications stack — from signal theory to embedded hardware.',
+    'Hands-on experience across the full telecommunications stack, from signal theory to embedded hardware.',
   items: [
     'Signal processing & spectrum simulation',
     'Quantum communications fundamentals',
@@ -43,7 +43,7 @@ export const telecom = {
   ],
   projects: [
     {
-      name: 'Undergraduate Thesis — Telecommunications',
+      name: 'Undergraduate Thesis, Telecommunications',
       description:
         'Developed a nanoplasmonic sensor, studying deposition techniques for plasmonic nanoparticles on surfaces.',
     },
@@ -84,7 +84,7 @@ export const dataScience = {
         'Deep learning projects applied to image and audio processing.',
     },
     {
-      name: 'Undergraduate Thesis — Data Science',
+      name: 'Undergraduate Thesis, Data Science',
       description:
         'Predicting surgical phases and duration in skull-base endoscopy using deep learning techniques.',
     },
@@ -121,7 +121,7 @@ export const experience = [
   {
     company: 'Repsol',
     role: 'Data Engineer',
-    period: 'Sep 2026 — Present',
+    period: 'Sep 2026 – Present',
     points: [
       'Building and maintaining data pipelines in Python',
       'Power BI dashboards for business analytics',
@@ -131,7 +131,7 @@ export const experience = [
   {
     company: 'TK Elevator',
     role: 'Process Automation Engineer',
-    period: 'Apr 2026 — Aug 2026',
+    period: 'Apr 2026 – Aug 2026',
     points: [
       'Developed custom AI agents for internal workflows',
       'Programming and validation of mechanical & electrical schematics',
@@ -140,7 +140,7 @@ export const experience = [
   {
     company: 'Amazon',
     role: 'Logistics Operations',
-    period: 'Jun 2025 — Jul 2025',
+    period: 'Jun 2025 – Jul 2025',
     points: [
       'Teamwork in high-demand environments, meeting daily productivity targets',
       'Used internal tracking systems for merchandise monitoring and control',

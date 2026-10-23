@@ -1,39 +1,54 @@
-import GlassCard from '../GlassCard';
+import { Suspense } from 'react';
+import { Heading, Reveal } from '../Reveal';
+import SignalField from '../three/SignalField';
 import { profile } from '../../data/content';
+
+const facts = [
+  { value: 'Dual degree', label: 'Data Science and Engineering + Telecommunication Technologies, UC3M' },
+  { value: 'Milan', label: 'Abroad studies at the Politecnico di Milano' },
+  { value: '2×', label: 'Academic Excellence Scholarship' },
+  { value: 'C1', label: 'Advanced Cambridge English' },
+];
 
 export default function Profile() {
   return (
-    <section id="profile" className="min-h-screen flex items-center px-6 sm:px-12 py-24">
-      <div className="max-w-5xl mx-auto w-full">
-        <h2 className="section-title text-gradient mb-4">Profile & Education</h2>
-        <p className="text-gray-400 max-w-2xl mb-12">
-          A dual background bridging hardware-level telecommunications with
-          data-driven decision making — trained across two leading European
-          institutions.
-        </p>
-        <div className="grid sm:grid-cols-2 gap-6">
-          <GlassCard>
-            <h3 className="text-xl font-semibold text-cyan-glow mb-2">
-              Education
-            </h3>
-            <p className="text-gray-300">{profile.fullDegree}</p>
-            <p className="text-gray-500 text-sm mt-2">{profile.schools}</p>
-            <p className="text-gray-500 text-sm mt-1">{profile.abroad}</p>
-            <p className="text-gray-500 text-sm mt-1">{profile.programNote}</p>
-          </GlassCard>
-          <GlassCard delay={0.1}>
-            <h3 className="text-xl font-semibold text-purple-glow mb-2">
-              Recognition
-            </h3>
-            <ul className="text-gray-300 space-y-2">
-              {profile.highlights.map((h) => (
-                <li key={h} className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-glow" />
-                  {h}
-                </li>
-              ))}
-            </ul>
-          </GlassCard>
+    <section id="profile" className="section" aria-labelledby="profile-title">
+      <div className="wrap grid lg:grid-cols-12 gap-y-12 gap-x-8">
+        <div className="lg:col-span-5">
+          <Heading id="profile-title" lines={['Profile &', 'education']} />
+          <Reveal delay={0.1} className="scene-frame mt-10 h-[320px] lg:h-[460px] lg:-ml-[var(--gutter)] lg:w-[calc(100%+var(--gutter)*2)]">
+            <Suspense fallback={null}>
+              <SignalField />
+            </Suspense>
+          </Reveal>
+        </div>
+        <div className="lg:col-span-7 lg:pt-3">
+          <Reveal>
+            <p className="t-lead text-slate-200 max-w-[34ch]">
+              One degree taught me how a signal crosses an antenna, a channel and a circuit. The other, how to
+              turn what arrives into a model that decides something.
+            </p>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-6 text-slate-400 max-w-[60ch]">
+              {profile.fullDegree} at {profile.schools}. {profile.programNote}
+            </p>
+          </Reveal>
+
+          <dl className="mt-14 grid sm:grid-cols-2 gap-4">
+            {facts.map((f, i) => (
+              <Reveal key={f.value} delay={0.06 * i} className="panel panel--lit">
+                <dt className="display text-[var(--t-lead)] font-semibold text-white">{f.value}</dt>
+                <dd className="mt-2 t-small text-slate-400">{f.label}</dd>
+              </Reveal>
+            ))}
+          </dl>
+          <Reveal delay={0.1} className="mt-4">
+            <p className="panel panel--lit flex flex-wrap items-center justify-between gap-3">
+              <span className="text-white font-medium">AWS Certified Cloud Practitioner</span>
+              <span className="t-small text-slate-400">Amazon Web Services</span>
+            </p>
+          </Reveal>
         </div>
       </div>
     </section>

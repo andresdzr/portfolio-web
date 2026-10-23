@@ -4,19 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#0d1117',
+        bg: '#060812',
         cyan: {
-          glow: '#38bdf8',
+          glow: '#5b8cff',
         },
         indigo: {
-          glow: '#818cf8',
+          glow: '#8b7bff',
         },
-        platinum: '#cbd5e1',
+        platinum: '#b4bccc',
         purple: {
-          glow: '#a855f7',
+          glow: '#a78bfa',
         },
         emerald: {
-          glow: '#10b981',
+          glow: '#94a3b8',
         },
       },
       fontFamily: {

@@ -1,18 +1,24 @@
-import { Suspense } from 'react';
+import { Suspense, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-// Desktop: the 3D scene fills the section as a background layer and the text
-// sits in a narrower column on one side. Mobile: the scene stacks below the text.
-export default function SceneSection({ id, className = '', scene, children }) {
+// Desktop: the 3D scene fills the section behind the text, which sits in a column on
+// one side; the scene drifts slightly against the scroll. Mobile: the scene stacks below.
+export default function SceneSection({ id, side = 'left', glow = 'violet', scene, children, labelledBy }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], ['3%', '-3%']);
+
   return (
-    <section
-      id={id}
-      className={`relative min-h-screen flex flex-col justify-center px-6 sm:px-12 py-24 overflow-hidden noise-bg ${className}`}
-    >
-      <div className="relative z-10 max-w-[1600px] mx-auto w-full grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-10 md:items-center pointer-events-none">
-        {children}
+    <section ref={ref} id={id} aria-labelledby={labelledBy} className="section relative lg:min-h-[100svh] flex flex-col justify-center overflow-clip">
+      <div className="wrap relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-10 pointer-events-none">
+        <div className={`pointer-events-auto lg:col-span-5 ${side === 'right' ? 'lg:col-start-8' : ''}`}>{children}</div>
       </div>
-      <div className="relative z-0 mt-10 h-[360px] w-full md:mt-0 md:h-auto md:absolute md:inset-0 pointer-events-none">
-        <Suspense fallback={null}>{scene}</Suspense>
+      {/* coloured light behind the model, on the side it stands */}
+      <div aria-hidden="true" className={`scene-glow scene-glow--${glow} ${side === 'right' ? 'scene-glow--left' : 'scene-glow--right'}`} />
+      <div className="relative z-0 mt-10 h-[460px] w-full lg:mt-0 lg:h-auto lg:absolute lg:inset-0 pointer-events-none">
+        <motion.div style={{ y }} className="h-full lg:sticky lg:top-0 lg:h-[100svh]">
+          <Suspense fallback={null}>{scene}</Suspense>
+        </motion.div>
       </div>
     </section>
   );

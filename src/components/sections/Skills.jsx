@@ -1,98 +1,64 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import GlassCard from '../GlassCard';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { Heading, Reveal } from '../Reveal';
 import { skillCategories } from '../../data/content';
 
-const colorMap = {
-  cyan: { text: 'text-cyan-glow', border: 'border-cyan-glow/30', bg: 'bg-cyan-glow/10' },
-  purple: { text: 'text-purple-glow', border: 'border-purple-glow/30', bg: 'bg-purple-glow/10' },
-  emerald: { text: 'text-emerald-glow', border: 'border-emerald-glow/30', bg: 'bg-emerald-glow/10' },
-};
-
-const COLLAPSED_LIMIT = 6;
-
-function SkillCard({ category, compact }) {
-  const [expanded, setExpanded] = useState(false);
-  const c = colorMap[category.color];
-  const shouldTruncate = compact && category.skills.length > COLLAPSED_LIMIT && !expanded;
-  const shown = shouldTruncate ? category.skills.slice(0, COLLAPSED_LIMIT) : category.skills;
-  const hidden = category.skills.length - shown.length;
-
-  return (
-    <GlassCard>
-      <h3 className={`font-semibold mb-4 ${c.text}`}>{category.category}</h3>
-      <div className="flex flex-wrap gap-2">
-        {shown.map((s) => (
-          <span
-            key={s}
-            className={`px-3 py-1.5 rounded-lg text-sm ${c.bg} ${c.border} border text-gray-200`}
-          >
-            {s}
-          </span>
-        ))}
-        {hidden > 0 && (
-          <button
-            onClick={() => setExpanded(true)}
-            className={`px-3 py-1.5 rounded-lg text-sm border border-dashed ${c.border} text-gray-400 hover:text-gray-200 transition-colors`}
-          >
-            +{hidden}
-          </button>
-        )}
-        {expanded && category.skills.length > COLLAPSED_LIMIT && (
-          <button
-            onClick={() => setExpanded(false)}
-            className="px-3 py-1.5 rounded-lg text-sm border border-dashed border-white/15 text-gray-500 hover:text-gray-300 transition-colors"
-          >
-            Show less
-          </button>
-        )}
-      </div>
-    </GlassCard>
-  );
-}
+const ease = [0.16, 1, 0.3, 1];
+const chipTone = { cyan: '', purple: ' chip--violet', emerald: ' chip--green' };
 
 export default function Skills() {
   const [filter, setFilter] = useState('All');
   const categories = ['All', ...skillCategories.map((c) => c.category)];
-  const visible =
-    filter === 'All' ? skillCategories : skillCategories.filter((c) => c.category === filter);
+  const visible = filter === 'All' ? skillCategories : skillCategories.filter((c) => c.category === filter);
 
   return (
-    <section id="skills" className="min-h-screen flex items-center px-6 sm:px-12 py-24 noise-bg">
-      <div className="max-w-5xl mx-auto w-full">
-        <h2 className="section-title text-gradient mb-8">Technical Skills</h2>
-
-        <div className="flex flex-wrap gap-2 mb-10">
-          {categories.map((c) => (
-            <button
-              key={c}
-              onClick={() => setFilter(c)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
-                filter === c
-                  ? 'bg-white/10 border-white/30 text-white'
-                  : 'border-white/10 text-gray-400 hover:border-white/20'
-              }`}
-            >
-              {c}
-            </button>
-          ))}
+    <section id="skills" className="section" aria-labelledby="skills-title">
+      <div className="wrap">
+        <div className="flex flex-wrap items-end justify-between gap-8">
+          <Heading id="skills-title" lines={['Technical skills']} />
+          <Reveal>
+            <LayoutGroup>
+              <div role="group" aria-label="Filter skills" className="flex flex-wrap gap-1 p-1 rounded-full bg-[var(--surface)]">
+                {categories.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => setFilter(c)}
+                    aria-pressed={filter === c}
+                    className={`relative px-4 py-2 rounded-full t-small transition-colors ${filter === c ? 'text-[var(--bg)]' : 'text-slate-300 hover:text-white'}`}
+                  >
+                    {filter === c && (
+                      <motion.span layoutId="skill-pill" className="absolute inset-0 rounded-full bg-[var(--ink)]" transition={{ duration: 0.45, ease }} />
+                    )}
+                    <span className="relative">{c}</span>
+                  </button>
+                ))}
+              </div>
+            </LayoutGroup>
+          </Reveal>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <motion.div layout className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <AnimatePresence mode="popLayout">
-            {visible.map((cat) => (
-              <motion.div
+            {visible.map((cat, i) => (
+              <motion.article
                 key={cat.category}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease, delay: i * 0.05 } }}
+                exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.25 } }}
+                className="panel panel--lit"
               >
-                <SkillCard category={cat} compact={filter === 'All'} />
-              </motion.div>
+                <h3 className="role-title">{cat.category}</h3>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {cat.skills.map((s) => (
+                    <li key={s} className={`chip${chipTone[cat.color] ?? ''}`}>{s}</li>
+                  ))}
+                </ul>
+              </motion.article>
             ))}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

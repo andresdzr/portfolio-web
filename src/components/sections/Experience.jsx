@@ -1,58 +1,64 @@
-import GlassCard from '../GlassCard';
+import { useRef } from 'react';
+import { motion, useScroll } from 'framer-motion';
+import { Heading, Reveal } from '../Reveal';
 import { experience, featuredProjects } from '../../data/content';
 
 export default function Experience() {
-  return (
-    <section id="experience" className="min-h-screen flex items-center px-6 sm:px-12 py-24">
-      <div className="max-w-5xl mx-auto w-full">
-        <h2 className="section-title text-gradient mb-10">
-          Experience & Featured Projects
-        </h2>
+  const listRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ['start 70%', 'end 60%'] });
 
-        <div className="mb-14">
-          <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-6">
-            Work Experience
-          </h3>
-          <div className="relative border-l border-white/10 pl-8 space-y-10">
-            {experience.map((job, i) => (
-              <div key={job.company} className="relative">
-                <span className="absolute -left-[41px] top-1 w-3 h-3 rounded-full bg-cyan-glow shadow-[0_0_12px_#22d3ee]" />
-                <GlassCard delay={i * 0.1}>
-                  <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-                    <h4 className="text-lg font-semibold text-white">
-                      {job.role} · <span className="text-cyan-glow">{job.company}</span>
-                    </h4>
-                    <span className="text-xs font-mono text-gray-500">{job.period}</span>
-                  </div>
-                  <ul className="space-y-1.5">
-                    {job.points.map((pt) => (
-                      <li key={pt} className="text-gray-400 text-sm flex items-start gap-2">
-                        <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-glow shrink-0" />
-                        {pt}
-                      </li>
-                    ))}
-                  </ul>
-                </GlassCard>
-              </div>
-            ))}
+  return (
+    <section id="experience" className="section" aria-labelledby="experience-title">
+      <div className="wrap grid lg:grid-cols-12 gap-y-12 gap-x-8">
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-[18vh]">
+            <Heading id="experience-title" lines={['Experience']} />
           </div>
         </div>
 
-        <div>
-          <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-6">
-            Featured Projects
-          </h3>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {featuredProjects.map((p, i) => (
-              <GlassCard key={p.name} delay={i * 0.1}>
-                <div className="flex items-baseline justify-between mb-2">
-                  <h4 className="font-semibold text-emerald-glow">{p.name}</h4>
-                  <span className="text-xs font-mono text-gray-500">{p.year}</span>
-                </div>
-                <p className="text-gray-400 text-sm">{p.description}</p>
-              </GlassCard>
+        <div ref={listRef} className="lg:col-span-8 relative pl-8">
+          {/* progress rail that fills as the roles scroll past */}
+          <span className="absolute left-0 top-2 bottom-2 w-px bg-white/10" aria-hidden="true" />
+          <motion.span
+            style={{ scaleY: scrollYProgress }}
+            className="absolute left-0 top-2 bottom-2 w-px origin-top bg-[var(--lilac)]"
+            aria-hidden="true"
+          />
+          <ol className="grid gap-16">
+            {experience.map((job) => (
+              <li key={job.company} className="relative">
+                <span className="absolute -left-[37px] top-2 w-[9px] h-[9px] rounded-full bg-[var(--lilac)]" aria-hidden="true" />
+                <Reveal>
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                    <h3 className="role-title">
+                      {job.role} <span className="text-[var(--lilac)]">· {job.company}</span>
+                    </h3>
+                    <p className="t-small text-slate-400">{job.period}</p>
+                  </div>
+                  <ul className="mt-4 grid gap-2 text-slate-300 max-w-[62ch]">
+                    {job.points.map((pt) => (
+                      <li key={pt}>{pt}</li>
+                    ))}
+                  </ul>
+                </Reveal>
+              </li>
             ))}
-          </div>
+          </ol>
+        </div>
+      </div>
+
+      <div className="wrap mt-[clamp(6rem,10vw,9rem)]">
+        <Heading id="projects-title" lines={['Featured projects']} />
+        <div className="mt-12 grid md:grid-cols-2 gap-4">
+          {featuredProjects.map((p, i) => (
+            <Reveal key={p.name} delay={0.08 * i} className="project-card panel panel--lit">
+              <div className="flex items-baseline justify-between gap-4">
+                <h3 className="role-title">{p.name}</h3>
+                <span className="t-small text-slate-400">{p.year}</span>
+              </div>
+              <p className="mt-4 text-slate-300">{p.description}</p>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

@@ -4,6 +4,8 @@ import * as THREE from 'three';
 import { useScrollRotation } from '../../hooks/useScrollRotation';
 import AutoFit from './AutoFit';
 
+const ZOOM = 1.3; // how much larger than a snug fit the model is drawn
+
 const NODE_COUNT = 26;
 const NEIGHBORS = 3;
 const SHELL_RADIUS = 1.9;
@@ -91,11 +93,11 @@ function Constellation() {
     return geo;
   }, [nodes, pairs]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
 
     if (group.current) {
-      group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, rotTarget.current, 0.06);
+      group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, rotTarget.current, 3.5, Math.min(delta, 0.05));
       group.current.rotation.x = Math.sin(t * 0.15) * 0.15;
     }
 
@@ -153,8 +155,8 @@ export default function NeuralConstellation({ shiftX = 0 }) {
   return (
     <Canvas camera={{ position: [0, 0, 4.8], fov: 45 }} dpr={[1, 1.5]}>
       <ambientLight intensity={0.4} />
-      <AutoFit width={12.5} height={7.4} direction={[0, 0.05, 1]} />
-      <group position={[shiftX, 0, 0]}>
+      <AutoFit width={12.5 / ZOOM} height={7.4 / ZOOM} direction={[0, 0.05, 1]} />
+      <group position={[(shiftX / ZOOM) * 0.78, 0, 0]}>
         <Constellation />
       </group>
     </Canvas>
